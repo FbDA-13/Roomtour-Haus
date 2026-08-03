@@ -1,0 +1,186 @@
+:root{--c:#f6eed2;--g:rgba(8,8,10,.74);--l:rgba(255,255,255,.18)}*{box-sizing:border-box}html,body,#app,#pano{width:100%;height:100%;margin:0;overflow:hidden;background:#050506}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#fff}#pano{position:absolute;inset:0}#loader{position:absolute;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#050506;transition:opacity .35s;pointer-events:none}.spinner{width:42px;height:42px;border:3px solid #ffffff33;border-top-color:var(--c);border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}#loader.hidden{opacity:0}#brand{display:none}#customerBrand{position:absolute;z-index:20;top:max(14px,env(safe-area-inset-top));left:max(14px,env(safe-area-inset-left));padding:9px 12px;background:#0007;backdrop-filter:blur(12px);border:1px solid var(--l);border-radius:12px}#customerBrand img{display:block;width:min(270px,32vw);max-height:72px;object-fit:contain}#sceneTitle{position:absolute;z-index:20;top:18px;left:50%;transform:translateX(-50%);padding:9px 15px;border-radius:999px;background:var(--g);backdrop-filter:blur(10px);font-size:15px;font-weight:600;border:1px solid var(--l);white-space:nowrap}#controls{position:absolute;z-index:25;right:16px;bottom:145px;display:flex;gap:8px}#controls button,.stripArrow{width:42px;height:42px;border:1px solid var(--l);border-radius:50%;background:var(--g);color:#fff;cursor:pointer;font-size:22px;display:grid;place-items:center}#filmstripWrap{position:absolute;z-index:30;left:0;right:0;bottom:0;padding:10px 10px calc(10px + env(safe-area-inset-bottom));display:grid;grid-template-columns:44px minmax(0,1fr) 44px;gap:8px;align-items:center;background:linear-gradient(transparent,rgba(0,0,0,.45) 18%,rgba(0,0,0,.86))}#filmstrip{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding:6px 2px;scroll-snap-type:x proximity}#filmstrip::-webkit-scrollbar{display:none}.sceneCard{flex:0 0 150px;border:1px solid var(--l);border-radius:10px;overflow:hidden;background:#09090bc9;color:#fff;padding:0;cursor:pointer;text-align:left;scroll-snap-align:center;transition:.2s}.sceneCard:hover{transform:translateY(-2px)}.sceneCard.active{border-color:var(--c);box-shadow:0 0 0 2px #f6eed244}.sceneCard img{width:100%;height:70px;display:block;object-fit:cover}.sceneCard span{display:block;padding:7px 8px;font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sceneCard.active span{color:var(--c)}.link-hotspot{width:46px;height:46px;border-radius:50%;background:#000a;border:2px solid var(--c);display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 16px #0008;animation:pulse 2s infinite}.link-hotspot:after{content:'➜';font-size:23px;color:var(--c)}.hotspot-label{position:absolute;left:50%;top:52px;transform:translateX(-50%);background:#000d;padding:5px 8px;border-radius:6px;font-size:12px;white-space:nowrap;opacity:0;transition:.2s}.link-hotspot:hover .hotspot-label{opacity:1}@keyframes pulse{50%{box-shadow:0 0 0 10px #f6eed200,0 4px 16px #0008}}@media(max-width:700px){#brand{display:none}#customerBrand{padding:7px 9px}#customerBrand img{width:min(180px,42vw);max-height:46px}#sceneTitle{top:auto;bottom:128px;font-size:12px;max-width:60vw;overflow:hidden;text-overflow:ellipsis}#controls{bottom:128px;right:8px;gap:5px}#controls button{width:35px;height:35px;font-size:18px}#filmstripWrap{grid-template-columns:minmax(0,1fr);padding:7px}.stripArrow{display:none}.sceneCard{flex-basis:110px}.sceneCard img{height:52px}.sceneCard span{font-size:10px;padding:5px 6px}.link-hotspot{width:42px;height:42px}}
+/* Kundenlogo links oben */
+#customerBrand {
+  position: absolute;
+  z-index: 26;
+  top: max(14px, env(safe-area-inset-top));
+  left: max(14px, env(safe-area-inset-left));
+  display: block;
+  padding: 8px;
+  border: 0;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, .28);
+  backdrop-filter: blur(8px);
+  transition: transform .2s ease, background .2s ease;
+}
+
+#customerBrand:hover {
+  transform: translateY(-1px);
+  background: rgba(0, 0, 0, .42);
+}
+
+#customerBrand img {
+  display: block;
+  width: min(180px, 24vw);
+  max-height: 150px;
+  object-fit: contain;
+}
+
+/* Eigenes Logo dezent rechts unten, oberhalb der Thumbnail-Leiste */
+#creatorBrand {
+  position: absolute;
+  z-index: 36;
+  right: max(14px, env(safe-area-inset-right));
+  bottom: calc(132px + env(safe-area-inset-bottom));
+  display: block;
+  padding: 7px 9px;
+  border: 0;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, .34);
+  backdrop-filter: blur(8px);
+  transition: transform .2s ease, background .2s ease;
+}
+
+#creatorBrand:hover {
+  transform: translateY(-1px);
+  background: rgba(0, 0, 0, .50);
+}
+
+#creatorBrand img {
+  display: block;
+  width: min(205px, 24vw);
+  max-height: 68px;
+  object-fit: contain;
+}
+
+/* Die Bedienelemente etwas nach links, damit sie nicht über dem Logo liegen. */
+#controls {
+  right: 16px;
+  bottom: 214px;
+}
+
+@media (max-width: 700px) {
+  #customerBrand {
+    top: max(8px, env(safe-area-inset-top));
+    left: max(8px, env(safe-area-inset-left));
+    padding: 5px;
+    background: rgba(0, 0, 0, .25);
+  }
+
+  #customerBrand img {
+    width: min(105px, 29vw);
+    max-height: 88px;
+  }
+
+  #creatorBrand {
+    right: max(8px, env(safe-area-inset-right));
+    bottom: calc(117px + env(safe-area-inset-bottom));
+    padding: 4px 6px;
+  }
+
+  #creatorBrand img {
+    width: min(125px, 34vw);
+    max-height: 42px;
+  }
+
+  #controls {
+    right: 8px;
+    bottom: 172px;
+  }
+}
+
+
+/* Version 5: kleinere Logos */
+#customerBrand img {
+  width: min(135px, 19vw);
+  max-height: 112px;
+}
+
+#creatorBrand img {
+  width: min(155px, 19vw);
+  max-height: 52px;
+}
+
+/* Schalter für die Bildervorschau */
+#filmstripToggle {
+  position: absolute;
+  z-index: 45;
+  left: 50%;
+  bottom: calc(126px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  width: 42px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--l);
+  border-radius: 999px;
+  background: rgba(8, 8, 10, .82);
+  color: var(--c);
+  box-shadow: 0 5px 18px rgba(0,0,0,.38);
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: bottom .28s ease, transform .2s ease, background .2s ease;
+}
+
+#filmstripToggle:hover {
+  background: rgba(8, 8, 10, .96);
+  transform: translateX(-50%) translateY(-1px);
+}
+
+/* Sanftes Ein- und Ausblenden */
+#filmstripWrap {
+  transition: transform .32s ease, opacity .25s ease;
+  will-change: transform, opacity;
+}
+
+body.filmstrip-collapsed #filmstripWrap {
+  transform: translateY(105%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.filmstrip-collapsed #filmstripToggle {
+  bottom: calc(14px + env(safe-area-inset-bottom));
+}
+
+/* Wenn die Vorschau ausgeblendet ist, rücken Logo und Steuerung nach unten. */
+body.filmstrip-collapsed #creatorBrand {
+  bottom: calc(16px + env(safe-area-inset-bottom));
+}
+
+body.filmstrip-collapsed #controls {
+  bottom: calc(18px + env(safe-area-inset-bottom));
+}
+
+@media (max-width: 700px) {
+  #customerBrand img {
+    width: min(82px, 23vw);
+    max-height: 70px;
+  }
+
+  #creatorBrand img {
+    width: min(98px, 27vw);
+    max-height: 34px;
+  }
+
+  #filmstripToggle {
+    bottom: calc(110px + env(safe-area-inset-bottom));
+    width: 38px;
+    height: 28px;
+    font-size: 21px;
+  }
+
+  body.filmstrip-collapsed #filmstripToggle {
+    bottom: calc(8px + env(safe-area-inset-bottom));
+  }
+
+  body.filmstrip-collapsed #creatorBrand {
+    bottom: calc(8px + env(safe-area-inset-bottom));
+  }
+
+  body.filmstrip-collapsed #controls {
+    bottom: calc(54px + env(safe-area-inset-bottom));
+  }
+}
